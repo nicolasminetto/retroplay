@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RetroPlay — a locadora de 16 bits no navegador</title>
+  <meta name="description" content="RetroPlay é o conceito de um emulador retrô que roda direto no navegador, com cinco jogos originais jogáveis. Peça de portfólio de Nícolas Minetto.">
+  <meta name="theme-color" content="#0E0A1F">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='2' y='1' width='12' height='14' fill='%239C98A6'/%3E%3Crect x='4' y='4' width='8' height='6' fill='%23FF3E9E'/%3E%3Crect x='4' y='12' width='2' height='1' fill='%230E0A1F'/%3E%3Crect x='7' y='12' width='2' height='1' fill='%230E0A1F'/%3E%3Crect x='10' y='12' width='2' height='1' fill='%230E0A1F'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="rolagem.js" defer></script>
+  <script src="audio.js" defer></script>
+  <script src="jogos.js" defer></script>
+  <script src="retroplay.js" defer></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a class="nav__logo" href="#topo" aria-label="RetroPlay, voltar ao topo">
+      <svg class="nav__icone" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="2" y="1" width="12" height="14" fill="#9C98A6"/>
+        <rect x="4" y="4" width="8" height="6" fill="#FF3E9E"/>
+        <rect x="4" y="12" width="2" height="1" fill="#0E0A1F"/>
+        <rect x="7" y="12" width="2" height="1" fill="#0E0A1F"/>
+        <rect x="10" y="12" width="2" height="1" fill="#0E0A1F"/>
+      </svg>
+      RETROPLAY
+    </a>
+    <nav aria-label="Seções">
+      <ul class="nav__links">
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#biblioteca">Biblioteca</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+      </ul>
+    </nav>
+    <div class="som">
+    <button class="nav__som" id="botao-som" type="button" aria-pressed="true" aria-expanded="false" aria-controls="painel-som" aria-label="Ajustes de som">
+      <svg viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="1" y="4" width="2" height="4" fill="currentColor"/>
+        <rect x="3" y="3" width="1" height="6" fill="currentColor"/>
+        <rect x="4" y="2" width="1" height="8" fill="currentColor"/>
+        <rect x="5" y="1" width="1" height="10" fill="currentColor"/>
+        <g class="nav__som-ondas"><rect x="7" y="5" width="1" height="2" fill="currentColor"/><rect x="9" y="3" width="1" height="6" fill="currentColor"/></g>
+        <g class="nav__som-x"><rect x="7" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="2" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/></g>
+      </svg>
+      <span class="nav__som-texto">Som</span>
+    </button>
+    <div class="som__painel" id="painel-som" role="group" aria-label="Ajustes de som" hidden>
+      <label class="som__linha" for="vol-efeitos">
+        <span>Efeitos</span>
+        <input type="range" id="vol-efeitos" min="0" max="100" step="5" value="70">
+        <output id="vol-efeitos-valor" for="vol-efeitos">70%</output>
+      </label>
+      <label class="som__linha" for="vol-musica">
+        <span>Música</span>
+        <input type="range" id="vol-musica" min="0" max="100" step="5" value="70">
+        <output id="vol-musica-valor" for="vol-musica">70%</output>
+      </label>
+      <button class="som__mudo" id="som-mudo" type="button" aria-pressed="false">Silenciar tudo</button>
+    </div>
+    </div>
+    <a class="nav__cta" href="#tela">Jogar agora</a>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ============ 1. A SALA (HERO) ============ -->
+    <section class="hero" id="topo" data-fundo="#0E0A1F">
+      <div class="hero__texto">
+        <p class="rotulo" data-entra="surgir">Emulador retrô · SNES e Mega Drive</p>
+        <h1 class="hero__titulo" data-entra="palavras" data-duracao="900">A locadora de 16 bits agora cabe no navegador.</h1>
+        <p class="hero__sub" data-entra="subir" data-atraso="700">
+          RetroPlay é o conceito de um emulador que roda direto na aba: sem download,
+          sem instalação, sem fita pra rebobinar. Cinco jogos originais já estão na
+          prateleira — escolha o cartucho e aperte Start.
+        </p>
+        <div class="hero__acoes" data-entra="subir" data-atraso="900">
+          <a class="etiqueta" href="#tela">Jogar agora</a>
+          <a class="link-seco" href="https://github.com/nicolasminetto/retroplay" rel="noopener">Ver o código</a>
+        </div>
+      </div>
+
+      <div class="hero__cena" aria-hidden="true">
+        <p class="neon">Insert coin</p>
+        <div class="hero__tv" data-segue-mouse="10">
+          <div class="crt crt--desligada">
+            <span class="crt__antena"></span>
+            <div class="crt__caixa">
+              <div class="crt__aro"><div class="crt__vidro"><span class="crt__reflexo"></span></div></div>
+              <div class="crt__painel">
+                <span class="crt__marca">VIDEOCOR</span>
+                <span class="crt__grade"></span>
+                <span class="crt__botoes"><i></i><i></i><i></i></span>
+                <span class="crt__power"><i class="crt__led"></i></span>
+              </div>
+            </div>
+            <span class="crt__base"></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="hero__nota">Portfólio: jogos originais em JavaScript — nenhuma emulação real, nenhuma ROM.</p>
+    </section>
+
+    <!-- ============ 2. VERSO DA CAIXA (COMO FUNCIONA) ============ -->
+    <section class="caixa" id="como-funciona" data-fundo="#0E0A1F">
+      <div class="caixa__verso">
+        <header class="caixa__topo">
+          <p class="rotulo">Como funciona</p>
+          <h2 class="titulo-secao" data-entra="subir">Três passos entre você e a fase 1.</h2>
+        </header>
+
+        <ol class="passos">
+          <li class="passo" data-entra="subir" data-atraso="100">
+            <svg class="passo__icone" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="2" y="1" width="8" height="10" fill="#9C98A6"/>
+              <rect x="3" y="3" width="6" height="4" fill="#FF3E9E"/>
+              <rect x="3" y="9" width="1" height="1" fill="#171031"/>
+              <rect x="5" y="9" width="1" height="1" fill="#171031"/>
+              <rect x="7" y="9" width="1" height="1" fill="#171031"/>
+            </svg>
+            <span class="passo__num">01</span>
+            <h3>Escolha o cartucho</h3>
+            <p>Passeie pela prateleira: plataforma, arcade, corrida e ação, todos jogáveis.</p>
+          </li>
+          <li class="passo" data-entra="subir" data-atraso="250">
+            <svg class="passo__icone" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="1" y="2" width="10" height="8" fill="#3FE0F0"/>
+              <rect x="2" y="4" width="8" height="5" fill="#171031"/>
+              <rect x="2" y="3" width="1" height="1" fill="#FF3E9E"/>
+              <rect x="3" y="6" width="4" height="1" fill="#FF3E9E"/>
+              <rect x="7" y="6" width="2" height="1" fill="#3FE0F0"/>
+            </svg>
+            <span class="passo__num">02</span>
+            <h3>Carrega na aba</h3>
+            <p>O jogo sobe direto no navegador. Nada de plugin, instalador ou conta obrigatória.</p>
+          </li>
+          <li class="passo" data-entra="subir" data-atraso="400">
+            <svg class="passo__icone" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="1" y="4" width="10" height="5" fill="#9C98A6"/>
+              <rect x="0" y="5" width="1" height="4" fill="#9C98A6"/>
+              <rect x="11" y="5" width="1" height="4" fill="#9C98A6"/>
+              <rect x="2" y="6" width="3" height="1" fill="#171031"/>
+              <rect x="3" y="5" width="1" height="3" fill="#171031"/>
+              <rect x="8" y="5" width="1" height="1" fill="#FF3E9E"/>
+              <rect x="9" y="7" width="1" height="1" fill="#3FE0F0"/>
+            </svg>
+            <span class="passo__num">03</span>
+            <h3>Jogue do seu jeito</h3>
+            <p>Setas, Z e X no teclado — ou o controle na própria tela do celular.</p>
+          </li>
+        </ol>
+
+        <footer class="caixa__rodape" aria-hidden="true">
+          <span class="caixa__compat">Setas · Z · X · Toque</span>
+          <span class="codigo-barras"></span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============ 3. A TV LIGA (PICO) ============ -->
+    <section class="pico cena-presa" id="tela" data-telas="5"
+             data-fundo="#06040C" aria-labelledby="pico-titulo">
+      <div class="cena-presa__palco pico__palco">
+        <div class="pico__legendas">
+          <h2 class="rotulo rotulo--claro" id="pico-titulo">Tela do emulador</h2>
+          <div class="pico__etapas">
+            <div class="etapa">
+              <h3 class="pico__titulo" data-entra="palavras">Toda sessão começava assim.</h3>
+              <p>Botão de liga. Um ponto de luz no meio do vidro, depois uma linha.</p>
+            </div>
+            <div class="etapa">
+              <h3 class="pico__titulo">Depois, o chiado.</h3>
+              <p>A tela procura sinal. Aqui ela é um canvas de 256 × 224 pixels — a resolução nativa de um SNES.</p>
+            </div>
+            <div class="etapa">
+              <h3 class="pico__titulo">A imagem desce, linha por linha.</h3>
+              <p>Como o feixe de um tubo de raios catódicos, de cima pra baixo.</p>
+            </div>
+            <div class="etapa">
+              <h3 class="pico__titulo">Os controles acordam.</h3>
+              <p>Setas movem, Z pula, X age. No celular, use o controle abaixo da TV.</p>
+            </div>
+            <div class="etapa">
+              <h3 class="pico__titulo">Sua vez.</h3>
+              <p>Clique na tela ou aperte Enter para jogar. Troque de cartucho na <a href="#biblioteca">prateleira</a>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pico__aparelho">
+          <div class="crt crt--grande">
+            <span class="crt__antena" aria-hidden="true"></span>
+            <div class="crt__caixa">
+              <div class="crt__aro">
+                <div class="crt__vidro">
+                  <canvas class="crt__canvas" id="tela-jogo" width="256" height="224" role="img"
+                          aria-label="Tela do jogo Super Irmãos Tijolo"></canvas>
+                  <span class="crt__luz" aria-hidden="true"></span>
+                  <span class="crt__mascara" aria-hidden="true"></span>
+                  <span class="crt__reflexo" aria-hidden="true"></span>
+                  <button class="crt__jogar" id="tv-jogar" aria-label="Jogar Super Irmãos Tijolo"></button>
+                </div>
+              </div>
+              <div class="crt__painel" aria-hidden="true">
+                <span class="crt__marca">VIDEOCOR</span>
+                <span class="crt__modelo">21" ESTÉREO</span>
+                <span class="crt__grade"></span>
+                <span class="crt__botoes"><i></i><i></i><i></i></span>
+                <span class="crt__power"><i class="crt__led"></i></span>
+              </div>
+            </div>
+            <span class="crt__base" aria-hidden="true"></span>
+          </div>
+
+          <div class="controle" role="group" aria-label="Controle na tela">
+            <div class="controle__dpad">
+              <button class="ctl ctl--cima" data-botao="cima" aria-label="Direcional para cima"></button>
+              <button class="ctl ctl--esq" data-botao="esq" aria-label="Direcional para a esquerda"></button>
+              <span class="ctl ctl--centro" aria-hidden="true"></span>
+              <button class="ctl ctl--dir" data-botao="dir" aria-label="Direcional para a direita"></button>
+              <button class="ctl ctl--baixo" data-botao="baixo" aria-label="Direcional para baixo"></button>
+            </div>
+            <div class="controle__meio">
+              <button class="ctl ctl--pilula" data-botao="select">Select</button>
+              <button class="ctl ctl--pilula" data-botao="start">Start</button>
+            </div>
+            <div class="controle__acoes">
+              <button class="ctl ctl--redondo ctl--b" data-botao="a" aria-label="Botão B, pular (tecla Z)">B<small>Z</small></button>
+              <button class="ctl ctl--redondo ctl--a" data-botao="b" aria-label="Botão A, ação (tecla X)">A<small>X</small></button>
+            </div>
+          </div>
+          <p class="pico__leitura">
+            <span id="no-cartucho">Super Irmãos Tijolo · Plataforma · SNES</span>
+            <span id="dica-jogo" class="pico__dica">Z pula · X corre · pise nos besouros</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. PRATELEIRA (BIBLIOTECA) ============ -->
+    <section class="prateleira" id="biblioteca" data-fundo="#0E0A1F">
+      <header class="prateleira__topo">
+        <p class="placa">Corredor 16-bit</p>
+        <h2 class="titulo-secao">Sopre o cartucho. Encaixe na TV.</h2>
+        <p class="prateleira__sub">
+          Passe o mouse para tirar a poeira; clique para encaixar e jogar. Jogos
+          originais, inspirados nos clássicos de plataforma, arcade, corrida e ação.
+        </p>
+      </header>
+
+      <ul class="cartuchos" id="cartuchos">
+        <li><button class="cartucho" data-jogo="irmaos-tijolo" aria-pressed="true">
+          <span class="cartucho__rotulo"><canvas class="cartucho__tela" data-jogo="irmaos-tijolo" width="256" height="224" aria-hidden="true"></canvas></span>
+          <span class="cartucho__nome">Super Irmãos Tijolo</span>
+          <span class="cartucho__meta">Plataforma · SNES</span>
+        </button></li>
+        <li><button class="cartucho" data-jogo="gorila-guindaste" aria-pressed="false">
+          <span class="cartucho__rotulo"><canvas class="cartucho__tela" data-jogo="gorila-guindaste" width="256" height="224" aria-hidden="true"></canvas></span>
+          <span class="cartucho__nome">Gorila no Guindaste</span>
+          <span class="cartucho__meta">Arcade · SNES</span>
+        </button></li>
+        <li><button class="cartucho" data-jogo="ratinho-jato" aria-pressed="false">
+          <span class="cartucho__rotulo"><canvas class="cartucho__tela" data-jogo="ratinho-jato" width="256" height="224" aria-hidden="true"></canvas></span>
+          <span class="cartucho__nome">Ratinho a Jato</span>
+          <span class="cartucho__meta">Corrida a pé · Mega Drive</span>
+        </button></li>
+        <li><button class="cartucho" data-jogo="robo-faisca" aria-pressed="false">
+          <span class="cartucho__rotulo"><canvas class="cartucho__tela" data-jogo="robo-faisca" width="256" height="224" aria-hidden="true"></canvas></span>
+          <span class="cartucho__nome">Robô Faísca</span>
+          <span class="cartucho__meta">Ação · SNES</span>
+        </button></li>
+        <li><button class="cartucho" data-jogo="turbo-asfalto" aria-pressed="false">
+          <span class="cartucho__rotulo"><canvas class="cartucho__tela" data-jogo="turbo-asfalto" width="256" height="224" aria-hidden="true"></canvas></span>
+          <span class="cartucho__nome">Turbo Asfalto '94</span>
+          <span class="cartucho__meta">Corrida · Mega Drive</span>
+        </button></li>
+      </ul>
+      <p class="sr-only" id="aviso-cartucho" aria-live="polite"></p>
+    </section>
+
+    <!-- ============ 5. REVISTA DE DICAS (STACK / SOBRE) ============ -->
+    <section class="revista" id="sobre" data-fundo="#140E2B">
+      <header class="revista__topo">
+        <p class="rotulo">Sobre o projeto</p>
+        <h2 class="titulo-secao">Detonado: como isso foi feito.</h2>
+        <p class="revista__lide">
+          RetroPlay é uma peça de portfólio. O que está em jogo aqui é o design, a
+          experiência e o código — explicados do jeito que as revistas de dicas
+          explicavam cada fase.
+        </p>
+      </header>
+
+      <div class="revista__corpo">
+        <aside class="ficha" data-entra="esquerda" aria-labelledby="ficha-titulo">
+          <h3 id="ficha-titulo" class="ficha__titulo">Ficha técnica</h3>
+          <dl>
+            <div><dt>Plataforma</dt><dd>Navegador, sem back-end</dd></div>
+            <div><dt>Linguagens</dt><dd>HTML semântico, CSS, JavaScript puro</dd></div>
+            <div><dt>Jogos</dt><dd>5 originais, passo fixo a 60 quadros por segundo</dd></div>
+            <div><dt>Gráficos</dt><dd>Canvas 2D, 256 × 224, <code>image-rendering: pixelated</code></dd></div>
+            <div><dt>Rolagem</dt><dd>Motor próprio: <code>IntersectionObserver</code> + <code>position: sticky</code></dd></div>
+            <div><dt>Hospedagem</dt><dd>Estática (Vercel ou Netlify)</dd></div>
+          </dl>
+          <div class="terminal">
+            <p><span class="terminal__prompt">$</span> <span data-entra="digitar" data-duracao="1600">git clone https://github.com/nicolasminetto/retroplay</span></p>
+            <p><span class="terminal__prompt">$</span> npx serve retroplay</p>
+          </div>
+        </aside>
+
+        <div class="dicas">
+          <article class="dica" data-entra="direita">
+            <p class="dica__num">Dica 1</p>
+            <h3>Cinco jogos, zero bibliotecas.</h3>
+            <p>Física, colisão por tiles, inimigos e placar escritos à mão. Um laço com
+              passo fixo de 1/60 s mantém o jogo igual em qualquer monitor, de 60 a 144 Hz.</p>
+          </article>
+          <article class="dica" data-entra="direita" data-atraso="120">
+            <p class="dica__num">Dica 2</p>
+            <h3>Sprites feitos de texto.</h3>
+            <p>Cada personagem é uma lista de linhas em que cada letra é uma cor da
+              paleta. As capas dos cartuchos são a primeira tela de cada jogo, desenhada
+              em miniatura — nenhuma imagem externa.</p>
+          </article>
+          <article class="dica" data-entra="direita" data-atraso="240">
+            <p class="dica__num">Dica 3</p>
+            <h3>A rolagem é o botão de liga.</h3>
+            <p>Um único valor de progresso, de 0 a 1, comanda o feixe de luz, o chiado,
+              a imagem descendo e os controles. Rolou pra longe? O jogo pausa sozinho.</p>
+          </article>
+          <article class="dica" data-entra="direita" data-atraso="360">
+            <p class="dica__num">Dica 4</p>
+            <h3>Acessível por padrão.</h3>
+            <p>As setas só são capturadas durante a partida, para nunca sequestrar a
+              rolagem. Com movimento reduzido, nada se mexe sozinho; cartuchos e
+              controles são botões de verdade, com foco visível.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. DEVOLUÇÃO (CTA FINAL) ============ -->
+    <section class="devolucao" data-fundo="#06040C">
+      <p class="devolucao__fundo" data-paralaxe="0.18" aria-hidden="true">REBOBINE</p>
+      <div class="devolucao__conteudo">
+        <p class="rotulo rotulo--claro">Hora de devolver</p>
+        <h2 class="devolucao__titulo neon">O código está no balcão.</h2>
+        <p class="devolucao__sub">
+          Da TV que liga ao robô que carrega o tiro, tudo está aberto no GitHub —
+          com as decisões explicadas no README.
+        </p>
+        <a class="etiqueta etiqueta--grande" href="https://github.com/nicolasminetto/retroplay" rel="noopener">Ver o código no GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="rodape">
+    <div class="rodape__linha">
+      <p class="rodape__marca">RETROPLAY</p>
+      <ul class="rodape__links">
+        <li><a href="https://github.com/nicolasminetto" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/nicolas-minetto-658938ab/" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+    <p class="rodape__aviso">
+      Projeto de portfólio e demonstração de Nícolas Minetto. Não é um emulador
+      funcional: nenhuma ROM é distribuída. Os cinco jogos são criações originais
+      inspiradas em gêneros clássicos — nenhum personagem, nome ou arte comercial é
+      reproduzido. SNES e Mega Drive são marcas de seus respectivos proprietários.
+    </p>
+    <p class="rodape__copy">© 2026 Nícolas Minetto</p>
+  </footer>
+</body>
+</html>

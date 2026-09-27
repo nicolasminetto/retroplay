@@ -1,0 +1,6 @@
+node_modules/
+verificacao/
+# ferramentas locais de desenvolvimento (não fazem parte do site)
+.claude/
+package.json
+package-lock.json
